@@ -9,8 +9,6 @@ Tuples
 Arrays
 */
 
-
-
 pub fn run() {
     // Default is i32
     let x = 1;
@@ -34,6 +32,5 @@ pub fn run() {
     let a1 = 'a';
     let face = '\u{1F600}'; //Emoji unicodes also work
 
-    println!("{:?}", (x,y,z,is_active,a1,face));
-
+    println!("{:?}", (x, y, z, is_active, a1, face));
 }
