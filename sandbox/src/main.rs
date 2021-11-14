@@ -12,6 +12,7 @@ mod pointer_ref;
 mod structs;
 mod enums;
 mod cli;
+mod ownership;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -24,12 +25,12 @@ fn main() {
     // print::run();
     // vars::run();
     // types::run();
-    // strings::run();
+    strings::run();
     // tuples::run();
     // arrays::run();
     // vectors::run();
     // conditionals::run();
-    loops::run();
+    // loops::run();
     // functions::run();
     // pointer_ref::run();
     // structs::run();
@@ -37,4 +38,5 @@ fn main() {
     // cli::run();
     // practice_code::run();
     // modules_and_crates::front_of_house::hosting::add_to_waitlist();
+    // ownership::run();
 }

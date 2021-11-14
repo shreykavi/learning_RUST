@@ -42,4 +42,22 @@ pub fn run() {
     assert_eq!(10, s.capacity());
 
     println!("{}", s);
+
+    // Use of slices and strings
+    let s = String::from("hello world");
+    let word = first_word(&s);
+    // s.clear(); // error! clear requires a mut reference but println uses word with immmutable ref -> breaks ownership rules
+    println!("the first word is: {}", word);
+}
+
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
 }

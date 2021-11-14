@@ -26,6 +26,9 @@ pub fn run() {
         // Shadows are useful as we can redefine type of var aswell
         let legal_drinker = true;
         println!("{} is a legal_drinker {}", name, legal_drinker);
+        
+        // Note that at end of scope Rust will free up memory for vars in this scope
+        let mut some_var = String::from("Hello.");
     }
 
     // Notice the value of the var changes back once out of scope
