@@ -15,4 +15,14 @@ pub fn run(){
     // Shorthand If
     let is_of_age = if age >= 21 { true } else { false };
     println!("Is of age: {}", is_of_age);
+    
+    // The return value of all arms must be same type
+    // The following code would not compile
+    // let is_of_age = if age >= 21 { true } else { 21 };
+
+    // Note: that conditional expressions must evaluate to a bool
+    // The following code would not compile
+    // if 3 {
+    //     println!("This cant work!")
+    // }
 }

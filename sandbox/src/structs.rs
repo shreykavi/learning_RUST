@@ -23,7 +23,8 @@ impl Person {
 
     // Get full name 
     fn full_name(&self) -> String {
-        // Having no semicolon here makes this return
+        // Having no semicolon here makes this and expression == return
+        // With a semicolon this would be a statement == no return 
         format!("{} {}", self.first_name, self.last_name) 
     }
     

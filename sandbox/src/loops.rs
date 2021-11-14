@@ -27,7 +27,7 @@ pub fn run() {
         count += 1;
     }
 
-    // For range
+    // For range (for loops are most common loop in rust)
     for x in 0..100 {
         if x % 15 == 0 {
             println!("fizzbuzz");
@@ -39,4 +39,29 @@ pub fn run() {
             println!("{}", x);
         }
     }
+
+    // Loop with label
+    // This lets us specify which loop to break out of
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {}", count);
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {}", remaining);
+            if remaining == 9 {
+                // only breaks inner loop
+                break;
+            }
+            if count == 2 {
+                // breaks labelled outer loop
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {}", count);
+
 }

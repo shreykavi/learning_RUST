@@ -18,4 +18,16 @@ pub fn run() {
     // Assign multiple vars
     let (my_name, my_age) = ("Shrey", 24);
     println!("{} is {}", my_name, my_age);
+
+    let legal_drinker = "Yes";
+
+    {// This defines an inner scope
+        // This is a shadow that reassigns the val of the var
+        // Shadows are useful as we can redefine type of var aswell
+        let legal_drinker = true;
+        println!("{} is a legal_drinker {}", name, legal_drinker);
+    }
+
+    // Notice the value of the var changes back once out of scope
+    println!("{} is a legal_drinker {}", name, legal_drinker);
 }
