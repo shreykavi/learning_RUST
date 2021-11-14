@@ -8,3 +8,5 @@ CLI:
 `cargo run` to compile and run
 `cargo build` to compile
 `cargo build --release` to compile for prod
+
+`cargo doc --open` for docs from all dependencies
