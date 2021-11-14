@@ -7,3 +7,5 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# packages available at https://crates.io/
+modules_and_crates = { path = "../c7_modules_crates" }

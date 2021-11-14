@@ -11,7 +11,14 @@
 // mod pointer_ref;
 // mod structs;
 // mod enums;
-mod cli;
+// mod cli;
+
+// Including module from path
+// #[path = "practice_code/outside_mod.rs"] mod outside_mod;
+mod practice_code;
+
+// import separate crate
+use modules_and_crates;
 
 fn main() {
     // print::run();
@@ -27,5 +34,7 @@ fn main() {
     // pointer_ref::run();
     // structs::run();
     // enums::run();
-    cli::run();
+    // cli::run();
+    practice_code::run();
+    modules_and_crates::front_of_house::hosting::add_to_waitlist();
 }
