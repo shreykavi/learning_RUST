@@ -33,8 +33,8 @@ fn main() {
     // loops::run();
     // functions::run();
     // pointer_ref::run();
-    structs::run();
-    // enums::run();
+    // structs::run();
+    enums::run();
     // cli::run();
     // practice_code::run();
     // modules_and_crates::front_of_house::hosting::add_to_waitlist();
