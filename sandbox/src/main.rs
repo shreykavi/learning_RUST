@@ -25,7 +25,7 @@ fn main() {
     // print::run();
     // vars::run();
     // types::run();
-    strings::run();
+    // strings::run();
     // tuples::run();
     // arrays::run();
     // vectors::run();
@@ -33,7 +33,7 @@ fn main() {
     // loops::run();
     // functions::run();
     // pointer_ref::run();
-    // structs::run();
+    structs::run();
     // enums::run();
     // cli::run();
     // practice_code::run();
