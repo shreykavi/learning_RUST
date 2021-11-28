@@ -13,6 +13,7 @@ mod structs;
 mod enums;
 mod cli;
 mod ownership;
+mod hashmaps;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -34,9 +35,10 @@ fn main() {
     // functions::run();
     // pointer_ref::run();
     // structs::run();
-    enums::run();
+    // enums::run();
     // cli::run();
     // practice_code::run();
     // modules_and_crates::front_of_house::hosting::add_to_waitlist();
     // ownership::run();
+    hashmaps::run();
 }

@@ -11,7 +11,24 @@ pub fn run() {
     hello.push('W');
 
     // Push a string
+    // this does not take ownership of vars passed to it (takes a string slice)
     hello.push_str("orld");
+
+    // String concatenation:
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &s2; // note s1 has been moved here and can no longer be used but s2 
+
+    // The `format` macro works like println but returns String to var 
+    let s = format!("{}-{}", s2, s3);
+
+    // This print slices by specified range of bytes
+    println!("This is a slice of 0..1 {:?}", &hello[0..1]);
+
+    // A better way of iterate the chars of a string is to use .chars()
+    for c in "नमस्ते".chars() {
+        println!("{}", c);
+    }
 
     // Get capacity in bytes
     println!("Capacity:{}", hello.capacity());
