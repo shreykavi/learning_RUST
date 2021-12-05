@@ -14,6 +14,7 @@ mod enums;
 mod cli;
 mod ownership;
 mod hashmaps;
+mod activities;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -40,5 +41,6 @@ fn main() {
     // practice_code::run();
     // modules_and_crates::front_of_house::hosting::add_to_waitlist();
     // ownership::run();
-    hashmaps::run();
+    // hashmaps::run();
+    activities::run();
 }

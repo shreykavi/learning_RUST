@@ -1,6 +1,11 @@
 // Primitive str = Immutable fixed-length string somewhere in memory
 // String = Growable, heap-allocated data struct - Use when you need to modify or own
 
+// Difference between str vs String:
+// 
+// - An &str points memory at a slice of a String. 
+// - If we dont need to own or mutate the text it’s working with, it should take a &str instead of a String
+
 pub fn run() {
     let mut hello = String::from("Hello ");
 
