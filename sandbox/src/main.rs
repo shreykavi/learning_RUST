@@ -15,6 +15,7 @@ mod cli;
 mod ownership;
 mod hashmaps;
 mod errors;
+mod generics;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -42,5 +43,6 @@ fn main() {
     // modules_and_crates::front_of_house::hosting::add_to_waitlist();
     // ownership::run();
     // hashmaps::run();
-    errors::run();
+    // errors::run();
+    generics::run();
 }
