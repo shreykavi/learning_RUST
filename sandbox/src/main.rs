@@ -16,6 +16,7 @@ mod ownership;
 mod hashmaps;
 mod errors;
 mod generics;
+mod traits;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -45,4 +46,5 @@ fn main() {
     // hashmaps::run();
     // errors::run();
     generics::run();
+    // traits::run();
 }
