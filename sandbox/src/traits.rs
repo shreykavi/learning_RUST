@@ -142,6 +142,6 @@ impl<T: Display + PartialOrd> Pair<T> {
 }
 
 // Can conditionally impl a Trait if T contains a specific Trait
-impl<T: Display> ToString for T {
-    // --snip--
-}
+// impl<T: Display> ToString for T {
+//     // --snip--
+// }
