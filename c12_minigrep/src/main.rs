@@ -1,4 +1,5 @@
 // cargo run searchstring example-filename.txt
+// CASE_INSENSITIVE=1 cargo run to poem.txt -- for case insensitive env var
 use std::env;
 use std::process;
 
@@ -11,7 +12,8 @@ fn main() {
     
     // let config = parse_config(&args);
     let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {}", err);
+        // eprintln! is for printing to stderr
+        eprintln!("Problem parsing arguments: {}", err);
         process::exit(1); // how to exit 
     });
 
@@ -21,7 +23,7 @@ fn main() {
     // Dont need unwrap_or_else in this case since
     // we're not planning to use the unwrapped value 
     if let Err(e) = c12_minigrep::run(config) {
-        println!("Application error: {}", e);
+        eprintln!("Application error: {}", e);
 
         process::exit(1);
     }
