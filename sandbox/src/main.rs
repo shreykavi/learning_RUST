@@ -19,6 +19,7 @@ mod generics;
 mod traits;
 mod lifetimes;
 mod closures;
+mod iterators;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -50,5 +51,6 @@ fn main() {
     // generics::run();
     // traits::run();
     // lifetimes::run();
-    closures::run();
+    // closures::run();
+    iterators::run();
 }
