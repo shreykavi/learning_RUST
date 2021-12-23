@@ -8,10 +8,10 @@ use c12_minigrep::Config;
 
 fn main() {
     // .collect requires annotation to know what to flatten to (Vec<String>)
-    let args: Vec<String> = env::args().collect();
+    // let args: Vec<String> = env::args().collect();
     
     // let config = parse_config(&args);
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         // eprintln! is for printing to stderr
         eprintln!("Problem parsing arguments: {}", err);
         process::exit(1); // how to exit 
