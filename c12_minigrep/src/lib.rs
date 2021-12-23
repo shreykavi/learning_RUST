@@ -1,3 +1,7 @@
+//! This type of comment is used to document without code following.
+//! This lib contains functionality to grep a files contents for a 
+//! query string.
+
 use std::fs;
 use std::env;
 use std::error::Error;
@@ -97,6 +101,8 @@ Trust me.";
     }
 }
 
+/// Searches contents for query string .. also note a triple slash here is a documentation comment
+/// and will auto generate HTML when `cargo doc` is run and annotate the following code. 
 pub fn case_sensitive_search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     // let mut results = Vec::new();
     // for line in contents.lines() {
