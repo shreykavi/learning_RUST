@@ -8,7 +8,7 @@ mod vectors;
 mod conditionals;
 mod loops;
 mod functions;
-mod pointer_ref;
+mod ref_pointers;
 mod structs;
 mod enums;
 mod cli;
@@ -20,6 +20,7 @@ mod traits;
 mod lifetimes;
 mod closures;
 mod iterators;
+mod smart_pointers;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -52,5 +53,6 @@ fn main() {
     // traits::run();
     // lifetimes::run();
     // closures::run();
-    iterators::run();
+    // iterators::run();
+    smart_pointers::run();
 }
