@@ -31,7 +31,17 @@ fn hello(name: &str) {
     println!("Hello, {}!", name);
 }
 
-pub fn run(){
+// Drop is used when rust cleans up
+struct CustomSmartPointer {
+    data: String,
+}
+impl Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+    }
+}
+
+fn box_ex(){
     // Box<T> lets us store data on heap (heap storage is more efficient)
     // on deallocation all pointers and data on heap are collected
     let b = Box::new(5);
@@ -51,4 +61,20 @@ pub fn run(){
     // - From &T to &U when T: Deref<Target=U>
     // - From &mut T to &mut U when T: DerefMut<Target=U>
     // - From &mut T to &U when T: Deref<Target=U>
+
+
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+    // We are not allowed to call drop as a method
+    // c.drop();
+    drop(c);
+    let d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
+    println!("CustomSmartPointers created.");
+}
+
+pub fn run(){
+    box_ex()
 }
