@@ -1,11 +1,14 @@
 // Smart Pointers: Similar to ref pointers but have additional metadata and capabilities
 // implements Deref and Drop
 
+use std::rc::Rc;
+
 // Cons is construct fn which is used for recursive lists (not v useful in rust)
 enum List {
     // Using a box here allows rust to infer size correctly (since its now a pointer which is predictable)
     // Cons(i32, List),
-    Cons(i32, Box<List>),
+    // Cons(i32, Box<List>),
+    Cons(i32, Rc<List>), // this was changed to Rc for multiple owners ex
     Nil,
 }
 
@@ -47,7 +50,7 @@ fn box_ex(){
     let b = Box::new(5);
     println!("b = {}", b);
 
-    let list = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Cons(3, Box::new(List::Nil))))));
+    // let list = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Cons(3, Box::new(List::Nil))))));
 
     let x = 5;
     let y = MyBox::new(x);
@@ -75,6 +78,31 @@ fn box_ex(){
     println!("CustomSmartPointers created.");
 }
 
+/// This shows an example of Rc counting the read only owners of the data
+fn multi_owner_ex(){
+    // Ex fails due to multiple owners
+    // let a = List::Cons(5, Box::new(List::Cons(10, Box::new(List::Nil))));
+    // let b = List::Cons(3, Box::new(a));
+    // let c = List::Cons(4, Box::new(a));
+
+    // in this example we use Rc::clone rather than .clone() -> 
+    //          When looking for performance problems in the code,
+    //          we only need to consider the deep-copy clones and can 
+    //          disregard calls to Rc::clone
+    let a = Rc::new(List::Cons(5, Rc::new(List::Cons(10, Rc::new(List::Nil)))));
+    println!("count after creating a = {}", Rc::strong_count(&a));
+    let b = List::Cons(3, Rc::clone(&a));
+    println!("count after creating b = {}", Rc::strong_count(&a));
+
+    {
+        let c = List::Cons(4, Rc::clone(&a));
+        println!("count after creating c = {}", Rc::strong_count(&a));
+    }
+    println!("count after c goes out of scope = {}", Rc::strong_count(&a));
+}
+
+
 pub fn run(){
-    box_ex()
+    // box_ex();
+    multi_owner_ex();
 }
