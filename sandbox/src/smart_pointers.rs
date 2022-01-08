@@ -1,7 +1,7 @@
 // Smart Pointers: Similar to ref pointers but have additional metadata and capabilities
 // implements Deref and Drop
 
-use std::rc::Rc;
+use std::rc::{Rc, Weak};
 use std::cell::RefCell;
 
 // Cons is construct fn which is used for recursive lists (not v useful in rust)
@@ -11,9 +11,19 @@ enum List {
     // Cons(i32, List),
     // Cons(i32, Box<List>),
     // Cons(i32, Rc<List>), // this was changed to Rc for multiple owners ex
-    Cons(Rc<RefCell<i32>>, Rc<List>), // this change allows us to have both multiple owners and that you can mutate!
+    // Cons(Rc<RefCell<i32>>, Rc<List>), // this change allows us to have both multiple owners and that you can mutate!
+    Cons(i32, RefCell<Rc<List>>), // Instead of modifying the int we can now modify the list
     Nil,
 }
+impl List {
+    fn tail(&self) -> Option<&RefCell<Rc<List>>> {
+        match self {
+            List::Cons(_, item) => Some(item),
+            Nil => None,
+        }
+    }
+}
+
 
 // Custom box type
 use std::ops::Deref;
@@ -104,25 +114,113 @@ fn box_ex(){
 //     println!("count after c goes out of scope = {}", Rc::strong_count(&a));
 // }
 
-pub fn interior_mut_ex(){
-    let value = Rc::new(RefCell::new(5));
+// pub fn interior_mut_ex(){
+//     let value = Rc::new(RefCell::new(5));
 
-    let a = Rc::new(List::Cons(Rc::clone(&value), Rc::new(List::Nil)));
+//     let a = Rc::new(List::Cons(Rc::clone(&value), Rc::new(List::Nil)));
 
-    let b = List::Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
-    let c = List::Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
+//     let b = List::Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
+//     let c = List::Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
 
-    *value.borrow_mut() += 10;
+//     *value.borrow_mut() += 10;
 
-    println!("a after = {:?}", a);
-    println!("b after = {:?}", b);
-    println!("c after = {:?}", c);
+//     println!("a after = {:?}", a);
+//     println!("b after = {:?}", b);
+//     println!("c after = {:?}", c);
+// }
+
+// Because of the cyclic references in this example we never get rid of all references and
+// so memory is never recollected
+fn memory_leak_ex() {
+    let a = Rc::new(List::Cons(5, RefCell::new(Rc::new(List::Nil))));
+
+    println!("a initial rc count = {}", Rc::strong_count(&a));
+    println!("a next item = {:?}", a.tail());
+
+    let b = Rc::new(List::Cons(10, RefCell::new(Rc::clone(&a))));
+
+    println!("a rc count after b creation = {}", Rc::strong_count(&a));
+    println!("b initial rc count = {}", Rc::strong_count(&b));
+    println!("b next item = {:?}", b.tail());
+
+    if let Some(link) = a.tail() {
+        *link.borrow_mut() = Rc::clone(&b);
+    }
+
+    println!("b rc count after changing a = {}", Rc::strong_count(&b));
+    println!("a rc count after changing a = {}", Rc::strong_count(&a));
+
+    // Uncomment the next line to see that we have a cycle;
+    // it will overflow the stack
+    // println!("a next item = {:?}", a.tail());
+}
+
+// Ownership memory leak safety example:
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    parent: RefCell<Weak<Node>>,
+    children: RefCell<Vec<Rc<Node>>>,
+}
+
+// With the use of weak reference we can have cyclic ref
+// without risk of a stackoverflow since strong count is not
+// incremented and so the vars can be dropped and cleaned up
+pub fn ownership_mem_safety(){
+    // Child nodes have a weak ref to their parents so they 
+    let leaf = Rc::new(Node {
+        value: 3,
+        parent: RefCell::new(Weak::new()),
+        children: RefCell::new(vec![]),
+    });
+
+    println!(
+        "leaf strong = {}, weak = {}",
+        Rc::strong_count(&leaf),
+        Rc::weak_count(&leaf),
+    );
+
+    // As of now this is a None
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+    {
+        let branch = Rc::new(Node {
+            value: 5,
+            parent: RefCell::new(Weak::new()),
+            children: RefCell::new(vec![Rc::clone(&leaf)]),
+        });
+
+        // downgrade returns a weak pointer and upgrades makes sure the 
+        // value hasnt been dropped (returns option incase it has been)
+        *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+
+        println!(
+            "branch strong = {}, weak = {}",
+            Rc::strong_count(&branch),
+            Rc::weak_count(&branch),
+        );
+
+        println!(
+            "leaf strong = {}, weak = {}",
+            Rc::strong_count(&leaf),
+            Rc::weak_count(&leaf),
+        );
+        println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+    }
+
+    // branch is dropped at this point
+    println!(
+        "leaf strong = {}, weak = {}",
+        Rc::strong_count(&leaf),
+        Rc::weak_count(&leaf),
+    );
 }
 
 pub fn run(){
     // box_ex();
     // multi_owner_ex();
-    interior_mut_ex();
+    // interior_mut_ex();
+    // memory_leak_ex();
+    ownership_mem_safety();
 }
 
 
