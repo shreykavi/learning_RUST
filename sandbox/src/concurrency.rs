@@ -1,6 +1,7 @@
 use std::thread;
 use std::time::Duration;
 use std::sync::mpsc;
+use std::sync::{Arc, Mutex};
 
 fn basic_thread_ex(){
     let v = vec![1, 2, 3];
@@ -69,7 +70,32 @@ fn channel_comms(){
     }
 }
 
+fn mutex_ex(){
+    // Arc = atomically reference counted (thread safe Rc)
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        // Clones of counter owned by diff threads
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            // If thread with lock panics its locked forever
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+
 pub fn run(){
     // basic_thread_ex();
-    channel_comms();
+    // channel_comms();
+    mutex_ex();
 }
