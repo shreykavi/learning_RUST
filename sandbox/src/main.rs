@@ -22,6 +22,7 @@ mod closures;
 mod iterators;
 mod smart_pointers;
 mod concurrency;
+mod patterns;
 
 // Including module from path
 // #[path = "practice_code/outside_mod.rs"] mod outside_mod;
@@ -56,5 +57,6 @@ fn main() {
     // closures::run();
     // iterators::run();
     // smart_pointers::run();
-    concurrency::run();
+    // concurrency::run();
+    patterns::run();
 }
