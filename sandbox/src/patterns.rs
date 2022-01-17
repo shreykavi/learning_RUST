@@ -1,3 +1,7 @@
+// Irrefutable: Pattern that will never fail to match (ex. assigning a var)
+// Refutable: Patterns that will fail to match in some cases
+// this concept is only important when sene
+
 fn conditional_ex(){
     let favorite_color: Option<&str> = None;
     let is_tuesday = false;
@@ -53,9 +57,24 @@ fn print_ex() {
     print_coordinates(&point);
 }
 
+fn refutable_ex(){
+    // The following fails since assignments cannot be made with None in Rust
+    // A value must exist and so we need an irrefutable pattern
+    // 
+    // let Some(x) = some_option_value {}; // where some_option_value can be 5 for ex. 
+
+    // By adding `if` we make it conditionally use the value if returned
+    // But if we use an irrefutable pattern it would error
+    // 
+    // if let Some(x) = 5 {
+    //     println!("{}", x);
+    // }
+}
+
 pub fn run(){
     conditional_ex();
     while_ex();
     for_ex();
     print_ex();
+    refutable_ex();
 }
